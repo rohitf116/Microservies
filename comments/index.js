@@ -42,9 +42,12 @@ app.post("/events", async (req, res) => {
   const { type, data } = req.body.data.data;
   if (type === "CommentModerated") {
     const { id, content, postId, status } = data;
+    console.log(data, "commentMde");
     const comments = posts[postId];
+    console.log(comments, "commentMde");
     const comment = comments.find((item) => item.id === id);
     comment.status = status;
+    console.log({ data: { id, content, postId, status } }, "commentMde");
     const headers = {
       "Content-Type": "application/json",
     };
@@ -56,7 +59,7 @@ app.post("/events", async (req, res) => {
       "http://localhost:4005/events",
       {
         type: "CommentUpdated",
-        data: { id, content, postId: req.params.id, status },
+        data: { id, content, postId, status },
       },
       config
     );
